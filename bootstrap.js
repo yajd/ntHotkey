@@ -1,6 +1,7 @@
 const {interfaces: Ci,	utils: Cu} = Components;
 Cu.import('resource://gre/modules/Services.jsm');
 const chromePath = 'chrome://ghforkable/content/';
+const ignoreFrames = false;
 
 function addDiv(theDoc) {
 	Cu.reportError('addDiv host = ' + theDoc.location);
@@ -81,8 +82,8 @@ var keycodes = {
 	'102': 6,
 	'103': 7,
 	'104': 8,
-	'105': 9,
-}
+	'105': 9
+};
 var navBufferTO;
 function navBuffer() {
 	Cu.reportError('execing navBuffer');
@@ -140,7 +141,7 @@ function keyDownedListener(e) {
 	if (hasNewTab_ContentWindow && hasNewTab_ContentWindow.document && (hasNewTab_ContentWindow.document instanceof Ci.nsIDOMXULDocument || hasNewTab_ContentWindow.document.location != 'about:newtab')) {
 		//likely just navBuffer'ed and need to disconnect this now
 		checkWinHasNewTab(hasNewTab_ContentWindow.top);
-		return;
+		Cu.reportError('hasNewTab value = ' + hasNewTab);
 	}
 	
 	try {
@@ -164,6 +165,9 @@ function keyUppedListener(e) {
 		Cu.reportError('e targ att = ' + e.target.getAttribute('id'));
 		if (e.target.getAttribute('id') == 'urlbar') {
 			inurlbar = true;
+			var input = e.target;
+			var sStart = input.selectionStart;
+			var sEnd = input.selectionEnd;
 			/*
 			if (e.target.value == '') {
 				if (buffer != '') {
@@ -171,14 +175,26 @@ function keyUppedListener(e) {
 				}
 			}
 			*/
-			Cu.reportError('urlbar value = "' + e.target.value + '"');
-			if (validHotkeys.indexOf(',' + e.target.value) == -1) {
+			var value = input.value;
+			if (sStart != sEnd) {
+				Cu.reportError('urlbar value cleaning from autocompletion : ' + value);
+				value = value.replace(value.substr(sStart, sEnd), ''); //this removes the autocompletion
+			}
+			Cu.reportError('urlbar value = "' + value + '"');
+			if (!((buffer == '' && value.length == 1) || (buffer.length == value.length - 1 && value.indexOf(buffer) == 0))) {
+				Cu.reportError('typed to much, buffer has been cleared probably buffer == "' + buffer + '"');
+				return;
+			} else {
+				Cu.reportError('all fine contnuing');
+			}
+			/* if (validHotkeys.indexOf(',' + value) == -1) {
 				buffer = '';
 				Cu.reportError('ku: in url bar and the value in here is not in validHotkeys so return');
 				return;
-			}
+			} */
 		}
 	} catch (ex) {
+		Cu.reportError('caught ex');
 		Cu.reportError(ex);
 	}
 	
@@ -191,12 +207,20 @@ function keyUppedListener(e) {
 	}
 	
 	var key = keycodes[eKeyCode];
-	if (!key) {
+	if (key === undefined) {
+		Cu.reportError('eKeyCode not found in keycodes eKeyCode = ' + eKeyCode);
 		buffer = '';
 		return;
 	}
+	
 	buffer += '' + key;
 	Cu.reportError('buffer updated to "' + buffer + '"'); 
+	
+	if (validHotkeys.indexOf(',' + buffer) == -1) {
+		Cu.reportError('buffer of "' + buffer + '" is not in validHotkeys so return');
+		buffer = '';
+		return;
+	}
 	
 	navBufferTO = hasNewTab_ContentWindow.setTimeout(navBuffer, prefs.multiKeySpeed);
 }
@@ -262,7 +286,7 @@ function tabSeld(e) {
 function checkWinHasNewTab(theWin) {
 
 	if (hasNewTab == true) {
-		if (hasNewTab_ContentWindow && hasNewTab_ContentWindow.document && hasNewTab_ContentWindow.document instanceof Ci.nsIDOMXULDocument && hasNewTab_ContentWindow.document.location == 'about:newtab') { //check if that contentwindow when last set to true is still around, if its not around then continue and do the check, because on consequent load like after navBuffer'ing from that tab, the contetnWindow does not get closed attribute or disappears, it morphs into other winodw, its weird but this is what my limited testing from 021314 reveals
+		if (hasNewTab_ContentWindow && hasNewTab_ContentWindow.document && hasNewTab_ContentWindow.document instanceof Ci.nsIDOMXULDocument && hasNewTab_ContentWindow.document.location == 'about:newtab' && hasNewTab_ContentWindowTop == theWin.top) { //check if that contentwindow when last set to true is still around, if its not around then continue and do the check, because on consequent load like after navBuffer'ing from that tab, the contetnWindow does not get closed attribute or disappears, it morphs into other winodw, its weird but this is what my limited testing from 021314 reveals //theWin.top here is fix for bug#2
 			if (theWin.top != hasNewTab_ContentWindow) {
 				//check because if a side iframe in the about:newtab window loads, and it doesnt have about:newtab, it will say its false but this willl not be accurate
 				//already identified that somewhere in this view is about:newtab so no need to check it again
@@ -308,7 +332,9 @@ function listenPageLoad(event) {
 	if (win.frameElement) {
 		//its a frame
 		Cu.reportError('its a frame');
-		return;//dont want to watch frames
+		if (ignoreFrames) {
+			return;//dont want to watch frames
+		}
 	}
 	addDiv(doc);
 }
@@ -498,7 +524,9 @@ function loadIntoContentWindowAndItsFrames(theWin) {
 		var doc = winArr[j].document;
 		//START - edit below here
 		addDiv(doc);
-		//break; //uncomment this line if you don't want to add to frames
+		if (ignoreFrames) {
+			break;
+		}
 		//END - edit above here
 	}
 }
@@ -519,7 +547,9 @@ function unloadFromContentWindowAndItsFrames(theWin) {
 		var doc = winArr[j].document;
 		//START - edit below here
 		removeDiv(doc);
-		//break; //uncomment this line if you don't want to remove from frames
+		if (ignoreFrames) {
+			break;
+		}
 		//END - edit above here
 	}
 }
