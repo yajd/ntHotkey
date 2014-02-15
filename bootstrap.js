@@ -3,6 +3,9 @@ Cu.import('resource://gre/modules/Services.jsm');
 const chromePath = 'chrome://ghforkable/content/';
 const ignoreFrames = false;
 
+var maxHotkey = 9;
+var maxHotkeyLength = 1;
+
 function addDiv(theDoc) {
 	Cu.reportError('addDiv host = ' + theDoc.location);
 	if (!theDoc) { Cu.reportError('no doc!'); return; } //document not provided, it is undefined likely
@@ -11,11 +14,27 @@ function addDiv(theDoc) {
 	Cu.reportError('loc pass');
 	removeDiv(theDoc, true);
 	
-	var thumbs = theDoc.querySelectorAll('.newtab-site');
+	var ntRows = theDoc.querySelectorAll('.newtab-row');
+	var ntRowsRevd = [];
+	[].forEach.call(ntRows, function(row) {
+		ntRowsRevd.push(row);
+	});
+	ntRowsRevd.reverse();
+
+	var ntThumbs = [];
+	[].forEach.call(ntRowsRevd, function(row) {
+		var subThumbs = row.querySelectorAll('.newtab-site');
+		[].forEach.call(subThumbs, function(st) {
+			ntThumbs.push(st);
+		});
+	});
+	
 	validHotkeys = ',';
-	[].forEach.call(thumbs, function(thumb, i) {
+	[].forEach.call(ntThumbs, function(thumb, i) {
 		var hint = theDoc.createElement('div');
 		var hotkey = i + 1;
+		maxHotkey = hotkey;
+		maxHotkeyLength = hotkey.toString().length;
 		var hintText = theDoc.createTextNode(hotkey);
 		validHotkeys += hotkey + ',';
 		hint.appendChild(hintText);
@@ -86,10 +105,12 @@ var keycodes = {
 };
 var navBufferTO;
 function navBuffer() {
-	Cu.reportError('execing navBuffer');
-	
 	var tBuffer = buffer;
 	buffer = '';
+	
+	Cu.reportError('execing navBuffer on tBuffer of "' + tBuffer + '"');
+	
+	
 	var hint = hasNewTab_ContentWindow.document.querySelector('.ntHotkey-' + tBuffer);
 	if (hint) {
 		var DOMWin = hasNewTab_ContentWindow.QueryInterface(Ci.nsIInterfaceRequestor)
@@ -123,7 +144,6 @@ function navBuffer() {
 }
 
 function keyDownedListener(e) {
-	
 	if (!hasNewTab) { return };
 	
 	var eKeyCode = e.keyCode;
@@ -137,17 +157,19 @@ function keyDownedListener(e) {
 		title:'kd e',
 		inBackground:true
 	}); */
-
+	Cu.reportError('in keydown');
+	try { //moved here trying to address #3, but i dont think it does but it likely adrresses some unoccured bug. because what if checkWinHasNewTab changes the contentWin, rmember the timeout was set on this the last updated global contentWin in keyup
+		Cu.reportError('clearing navBufferTO');
+		hasNewTab_ContentWindow.clearTimeout(navBufferTO);
+	} catch(ex) { Cu.reportError(ex) }
+	
 	if (hasNewTab_ContentWindow && hasNewTab_ContentWindow.document && (hasNewTab_ContentWindow.document instanceof Ci.nsIDOMXULDocument || hasNewTab_ContentWindow.document.location != 'about:newtab')) {
 		//likely just navBuffer'ed and need to disconnect this now
 		checkWinHasNewTab(hasNewTab_ContentWindow.top);
 		Cu.reportError('hasNewTab value = ' + hasNewTab);
 	}
 	
-	try {
-		Cu.reportError('clearing navBufferTO');
-		hasNewTab_ContentWindow.clearTimeout(navBufferTO);
-	} catch(ex) { Cu.reportError(ex) }
+	//may need to ahve a clearNavBufferTO after the checkWinHasNewTab runs
 	
 }
 
@@ -159,6 +181,16 @@ function keyUppedListener(e) {
 	
 	//if focus is in input field (typable field) then dont listen to keys
 	//if focus is in urlbar and urlbars value is a validHotkey then keep listening to typing
+	
+	var key = keycodes[eKeyCode];
+	if (key === undefined) {
+		Cu.reportError('eKeyCode not found in keycodes eKeyCode = ' + eKeyCode);
+		buffer = '';
+		return;
+	}
+	
+	buffer += '' + key;
+	Cu.reportError('buffer updated to "' + buffer + '"'); 
 	
 	var inurlbar = false;
 	try {
@@ -181,8 +213,12 @@ function keyUppedListener(e) {
 				value = value.replace(value.substr(sStart, sEnd), ''); //this removes the autocompletion
 			}
 			Cu.reportError('urlbar value = "' + value + '"');
-			if (!((buffer == '' && value.length == 1) || (buffer.length == value.length - 1 && value.indexOf(buffer) == 0))) {
-				Cu.reportError('typed to much, buffer has been cleared probably buffer == "' + buffer + '"');
+			
+			//if (!((buffer == '' && value.length == 1) || (buffer.length == value.length - 1 && value.indexOf(buffer) == 0))) {
+			if (buffer != value || value.length > maxHotkeyLength) {
+				Cu.reportError('typed to much, MUST NOT CLEAR BUFFER, as user may have typed 1 and then 2 real fast, he may have typed the 2 before keyupping the 1');
+				Cu.reportError('maxHotkey len = ' + maxHotkey.toString().length);
+				Cu.reportError('buffer = "' + buffer + '" and value = "' + value + '"');
 				return;
 			} else {
 				Cu.reportError('all fine contnuing');
@@ -203,24 +239,21 @@ function keyUppedListener(e) {
 		
 		if (hasCaret) {
 			Cu.reportError('in some typable field so dont listen keys');
+			buffer = '';
+			return;
 		}
 	}
-	
-	var key = keycodes[eKeyCode];
-	if (key === undefined) {
-		Cu.reportError('eKeyCode not found in keycodes eKeyCode = ' + eKeyCode);
-		buffer = '';
-		return;
-	}
-	
-	buffer += '' + key;
-	Cu.reportError('buffer updated to "' + buffer + '"'); 
 	
 	if (validHotkeys.indexOf(',' + buffer) == -1) {
 		Cu.reportError('buffer of "' + buffer + '" is not in validHotkeys so return');
 		buffer = '';
 		return;
 	}
+	
+	try { //this definitely has to be here to address #3 because what if user is typing two key hotkey, and lifts the second downed key before or something something adfhalsdfasf too much thinking
+		Cu.reportError('clearing navBufferTO');
+		hasNewTab_ContentWindow.clearTimeout(navBufferTO);
+	} catch(ex) { Cu.reportError(ex) }
 	
 	navBufferTO = hasNewTab_ContentWindow.setTimeout(navBuffer, prefs.multiKeySpeed);
 }
