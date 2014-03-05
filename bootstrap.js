@@ -39,7 +39,7 @@ function addDiv(theDoc) {
 		validHotkeys += hotkey + ',';
 		hint.appendChild(hintText);
 		hint.setAttribute('class','ntHotkeyHint ntHotkey-' + hotkey);
-		hint.setAttribute('style','position:absolute; opacity:.5; z-index:500; display:inline-block; font-size:5em; color:red; text-shadow:1px 1px 2px;');
+		hint.setAttribute('style','position:absolute; opacity:.5; z-index:500; display:inline-block; font-size:5em; color:red; text-shadow:1px 1px 2px; pointer-events:none;');
 		thumb.appendChild(hint);
 	});
 	
@@ -112,6 +112,7 @@ function navBuffer() {
 	
 	
 	var hint = hasNewTab_ContentWindow.document.querySelector('.ntHotkey-' + tBuffer);
+	Services.appShell.hiddenDOMWindow.console.error('html of document checking for buffer', hasNewTab_ContentWindow.document.documentElement.innerHTML);
 	if (hint) {
 		var DOMWin = hasNewTab_ContentWindow.QueryInterface(Ci.nsIInterfaceRequestor)
 											.getInterface(Ci.nsIWebNavigation)
@@ -165,8 +166,11 @@ function keyDownedListener(e) {
 	
 	if (hasNewTab_ContentWindow && hasNewTab_ContentWindow.document && (hasNewTab_ContentWindow.document instanceof Ci.nsIDOMXULDocument || hasNewTab_ContentWindow.document.location != 'about:newtab')) {
 		//likely just navBuffer'ed and need to disconnect this now
+		Services.appShell.hiddenDOMWindow.console.info('doing checkWinHasNewTab');
 		checkWinHasNewTab(hasNewTab_ContentWindow.top);
 		Cu.reportError('hasNewTab value = ' + hasNewTab);
+	} else {
+		Services.appShell.hiddenDOMWindow.console.warn('NOTTTT doing checkWinHasNewTab');
 	}
 	
 	//may need to ahve a clearNavBufferTO after the checkWinHasNewTab runs
@@ -189,13 +193,27 @@ function keyUppedListener(e) {
 		return;
 	}
 	
-	buffer += '' + key;
-	Cu.reportError('buffer updated to "' + buffer + '"'); 
-	
+	Services.appShell.hiddenDOMWindow.console.log('e = ',e);
+	Services.appShell.hiddenDOMWindow.console.log('e.view == ChromeWindow? = ', Object.prototype.toString.call(e.view) == '[object ChromeWindow]');
 	var inurlbar = false;
+	
+	if (e.originalTarget) { //have to use origtarg because when focus is in xul textbox the textbox element is XBL and not an instance of Ci.nsIDOMHTMLInputElement but origTarg is
+		var hasCaret = (!e.originalTarget.getAttribute('disabled') && (formHelperIsEditable(e.originalTarget) || (e.originalTarget instanceof Ci.nsIDOMHTMLInputElement && e.originalTarget.mozIsTextField(false)) || e.originalTarget instanceof Ci.nsIDOMHTMLTextAreaElement || e.originalTarget instanceof Ci.nsIDOMXULTextBoxElement));
+		if (Object.prototype.toString.call(e.view) == '[object ChromeWindow]' && hasCaret) {
+			if (e.target && e.target.getAttribute('id') == 'urlbar') {
+				inurlbar = true;
+			} else {
+				Services.appShell.hiddenDOMWindow.console.info('returing dont listen to key input from chrome as we not in urlbar');
+				return; //dont listen to any key input if coming from chrome except if they are in urlbar
+			}
+		} 
+	}
+		
+	buffer += '' + key;
+	Cu.reportError('buffer updated to "' + buffer + '"');
+	
 	try {
-		Cu.reportError('e targ att = ' + e.target.getAttribute('id'));
-		if (e.target.getAttribute('id') == 'urlbar') {
+		if (inurlbar) {
 			inurlbar = true;
 			var input = e.target;
 			var sStart = input.selectionStart;
@@ -219,6 +237,7 @@ function keyUppedListener(e) {
 				Cu.reportError('typed to much, MUST NOT CLEAR BUFFER, as user may have typed 1 and then 2 real fast, he may have typed the 2 before keyupping the 1');
 				Cu.reportError('maxHotkey len = ' + maxHotkey.toString().length);
 				Cu.reportError('buffer = "' + buffer + '" and value = "' + value + '"');
+				buffer = '';
 				return;
 			} else {
 				Cu.reportError('all fine contnuing');
@@ -235,7 +254,7 @@ function keyUppedListener(e) {
 	}
 	
 	if (!inurlbar) {
-		var hasCaret = (!e.target.getAttribute('disabled') && (formHelperIsEditable(e.target) || (e.target instanceof Ci.nsIDOMHTMLInputElement && e.target.mozIsTextField(false)) || e.target instanceof Ci.nsIDOMHTMLTextAreaElement || e.target instanceof Ci.nsIDOMXULTextBoxElement));
+		//var hasCaret = (!e.target.getAttribute('disabled') && (formHelperIsEditable(e.target) || (e.target instanceof Ci.nsIDOMHTMLInputElement && e.target.mozIsTextField(false)) || e.target instanceof Ci.nsIDOMHTMLTextAreaElement || e.target instanceof Ci.nsIDOMXULTextBoxElement));
 		
 		if (hasCaret) {
 			Cu.reportError('in some typable field so dont listen keys');
@@ -345,7 +364,7 @@ function checkWinHasNewTab(theWin) {
 		*/
 		if (winArr[j].document.location == 'about:newtab') {
 			hasNewTab = true;
-			hasNewTab_ContentWindow = theWin;
+			hasNewTab_ContentWindow = winArr[j].window;
 			hasNewTab_ContentWindowTop = theWin.top;
 			return true;
 		} else {
@@ -599,87 +618,3 @@ function shutdown(aData, aReason) {
 function install() {}
 
 function uninstall() {}
-
-
-
-
-function cDump(args) {
-//oldway: obj, title, deep, outputTarget
-//args is object with keys:
-//obj - required, the obj to dump
-//title - optional, if given, the cdump will be titled
-//deep - optional, if given it will go deeper in //not implemented yet: integer of how many levels deep to go
-//target - where to dump
-//if target == 0, can define inBackground: true
-//if target not in targetsDisableDeep then can specify initDisplayed to true which will make all sub divs be block
-//inBackground set to tru to load tab in bg
-//Services jsm must be imported
-//set args.deep to 1 to make it args.deep but initialize args.deeps div at none.
-//se args.deep to 2 to initialize at block
-//args.target == 0 then new tab, if set args.target to false then will do 0 but will load tab in background, if set to 0 or leave undefined it will load tab in foreground
-//args.target == 1 then reportError (cannot do args.deep in this args.target)
-//args.target == 2 then new window (not yet setup)
-//args.target == 3 then Services.console.logStringMessage
-//args.target == nsIFile, file at that path
-var targetsDisableDeep = [1,3];
-var tstr = '';
-var bstr = '';
-if (args.deep && targetsDisableDeep.indexOf(args.target) == -1) {
-bstr = '<a href="javascript:void(0)" onclick="var subdivs = document.querySelectorAll(\'div > div\'); for(var i=0;i<subdivs.length;i++) { subdivs[i].style.display = subdivs[i].style.display==\'block\'?\'none\':\'block\'; }">Toggle All</a>\n\n';
-}
-if (!args.deep) {
-args.deep = 0;
-}
-var fstr = '';
-for (var b in args.obj) {
-try{
-bstr += b+'='+args.obj[b]+'\n';
-if (args.deep && targetsDisableDeep.indexOf(args.target) == -1) {
-var sstr = '';
-for (var c in args.obj[b]) {
-try {
-sstr += '\t\t\t' + c+'='+args.obj[b][c]+'\n';
-} catch(e0) {
-sstr += '\t\t\t' + c+'=exception_occured_on_read='+e0+'\n';
-}
-}
-if (sstr != '') {
-bstr += '<div style="margin-left:35px;color:gray;cursor:pointer;border:1px solid blue;" onclick="this.childNodes[1].style.display=this.childNodes[1].style.display==\'block\'?\'none\':\'block\';window.setScroll(window.scrollX,this.offsetTop-this.offsetHeight);">click to toggle<div style="display:' + (args.initDisplayed ? 'block' : 'none') + ';">' + sstr + '</div></div>';
-}
-}
-} catch (e) {
-fstr = b+'='+e+'\n';
-}
-}
-tstr += '<b>BSTR::</b>\n' + bstr;
-tstr += '\n<b>FSTR::</b>\n' + fstr;
-if (!args.target) {
-var cWin = Services.wm.getMostRecentWindow('navigator:browser');
-var onloadFunc = function() {
-//cWin.gBrowser.selectedTab = cWin.gBrowser.tabContainer.childNodes[cWin.gBrowser.tabContainer.childNodes.length-1];
-newTabBrowser.removeEventListener('load', onloadFunc, true);
-if (args.title) { newTabBrowser.contentDocument.title = args.title; }
-newTabBrowser.contentDocument.body.innerHTML = tstr.replace(/\n/g,'<br>')
-};
-var newTabBrowser = cWin.gBrowser.getBrowserForTab(cWin.gBrowser.loadOneTab('about:blank',{inBackground:args.inBackground}));
-newTabBrowser.addEventListener('load', onloadFunc, true);
-} else if (args.target == 1) {
-tstr = 'CDUMP OF "' + args.title + '">>>\n\n' + tstr + ' "\n\nEND: CDUMP OF "' + args.title + '" ^^^';
-Cu.reportError(tstr);
-} else if (args.target == 2) {
-//to new window
-} else if (args.target == 3) {
-tstr = 'CDUMP OF "' + args.title + '">>>\n\n' + tstr + ' "\n\nEND: CDUMP OF "' + args.title + '" ^^^';
-Services.console.logStringMessage(tstr);
-} else if (args.target instanceof Ci.nsIFile) {
-var html = '<div style="display:flex;align-items:flex-start;broder:1px dashed black;"><div style="width:15em;font-weight:bold;display:inline-block;">' + [new Date().toLocaleTimeString(), 'Title: ' + args.title].join('<br>') + '</div><div class="dumpCol" style="display:inline-block;>' + tstr.replace(/\n/g,'<br>') + '</div></div>';
-writeFile(args.target, html, false, function(status) {
-if (!Components.isSuccessCode(status)) {
-Services.wm.getMostRecentWindow(null).alert('cDump to file failed');
-} else {
-//Services.wm.getMostRecentWindow(null).alert('writeFile SUCCESFUL');
-}
-});
-}
- 
-}
