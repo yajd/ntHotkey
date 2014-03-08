@@ -7,11 +7,11 @@ var maxHotkey = 9;
 var maxHotkeyLength = 1;
 
 function addDiv(theDoc) {
-	Cu.reportError('addDiv host = ' + theDoc.location);
-	if (!theDoc) { Cu.reportError('no doc!'); return; } //document not provided, it is undefined likely
-	if (!theDoc instanceof Ci.nsIDOMXULDocument) { Cu.reportError('not xul doc'); return; } //not html document, so its likely an xul document
-	if(!(theDoc.location && theDoc.location == 'about:newtab')) { Cu.reportError('location not match:' + theDoc.location); return; }
-	Cu.reportError('loc pass');
+	
+	if (!theDoc) {  return; } //document not provided, it is undefined likely
+	if (!theDoc instanceof Ci.nsIDOMXULDocument) {  return; } //not html document, so its likely an xul document
+	if(!(theDoc.location && theDoc.location == 'about:newtab')) {  return; }
+	
 	removeDiv(theDoc, true);
 	
 	var ntRows = theDoc.querySelectorAll('.newtab-row');
@@ -44,7 +44,7 @@ function addDiv(theDoc) {
 	});
 	
 	checkWinHasNewTab(theDoc.defaultView);
-	Cu.reportError('this loaded win hasNewTab? = ' + hasNewTab);
+	
 	
 	//theDoc.defaultView.addEventListener('unload', listenAboutNewTabUnload, false);
 	
@@ -53,11 +53,11 @@ function addDiv(theDoc) {
 }
 var validHotkeys = '';
 function removeDiv(theDoc, skipChecks) {
-	//Cu.reportError('removeDiv');
+	//
 	if (!skipChecks) {
-		if (!theDoc) { Cu.reportError('no doc!'); return; } //document not provided, it is undefined likely
-		if (!theDoc instanceof Ci.nsIDOMXULDocument) { Cu.reportError('not xul doc'); return; } //not html document, so its likely an xul document
-		if(!(theDoc.location && theDoc.location == 'about:newtab')) { Cu.reportError('location not match:' + theDoc.location); return; }
+		if (!theDoc) {  return; } //document not provided, it is undefined likely
+		if (!theDoc instanceof Ci.nsIDOMXULDocument) {  return; } //not html document, so its likely an xul document
+		if(!(theDoc.location && theDoc.location == 'about:newtab')) {  return; }
 	}
 	
 	
@@ -108,7 +108,7 @@ function navBuffer() {
 	var tBuffer = buffer;
 	buffer = '';
 	
-	Cu.reportError('execing navBuffer on tBuffer of "' + tBuffer + '"');
+	
 	
 	
 	var hint = hasNewTab_ContentWindow.document.querySelector('.ntHotkey-' + tBuffer);
@@ -134,13 +134,13 @@ function navBuffer() {
 					}
 				 }
 			} catch (ex) {
-				Cu.reportError(ex);
+				
 			}
 		}
 		
 		hint.parentNode.querySelector('a').click(); //this is the a in the thumb should be first child of parentNode of hint
 	} else {
-		Cu.reportError('no hint matching buffer of ".ntHotkey-' + tBuffer + '"');
+		
 	}
 }
 
@@ -158,17 +158,17 @@ function keyDownedListener(e) {
 		title:'kd e',
 		inBackground:true
 	}); */
-	Cu.reportError('in keydown');
+	
 	try { //moved here trying to address #3, but i dont think it does but it likely adrresses some unoccured bug. because what if checkWinHasNewTab changes the contentWin, rmember the timeout was set on this the last updated global contentWin in keyup
-		Cu.reportError('clearing navBufferTO');
+		
 		hasNewTab_ContentWindow.clearTimeout(navBufferTO);
-	} catch(ex) { Cu.reportError(ex) }
+	} catch(ex) {  }
 	
 	if (hasNewTab_ContentWindow && hasNewTab_ContentWindow.document && (hasNewTab_ContentWindow.document instanceof Ci.nsIDOMXULDocument || hasNewTab_ContentWindow.document.location != 'about:newtab')) {
 		//likely just navBuffer'ed and need to disconnect this now
 		Services.appShell.hiddenDOMWindow.console.info('doing checkWinHasNewTab');
 		checkWinHasNewTab(hasNewTab_ContentWindow.top);
-		Cu.reportError('hasNewTab value = ' + hasNewTab);
+		
 	} else {
 		Services.appShell.hiddenDOMWindow.console.warn('NOTTTT doing checkWinHasNewTab');
 	}
@@ -180,7 +180,7 @@ function keyDownedListener(e) {
 function keyUppedListener(e) {
 	var eKeyCode = e.keyCode;
     //var now = new Date();
-	try { delete downFireOnceHack[eKeyCode]; } catch(ex) { Cu.reportError('ex on deleting downFireOnceHack:' + ex); } //had to put this here because if click "set key" then click to cancel so it sets key for "downed" then on up setting === null so it doesnt get past the  'if (!action[eKeyCode] && settingKey === null) { return }' so downFireOnceHack[eKeyCode] is never deleted
+	try { delete downFireOnceHack[eKeyCode]; } catch(ex) {  } //had to put this here because if click "set key" then click to cancel so it sets key for "downed" then on up setting === null so it doesnt get past the  'if (!action[eKeyCode] && settingKey === null) { return }' so downFireOnceHack[eKeyCode] is never deleted
 	if (!hasNewTab) { return };
 	
 	//if focus is in input field (typable field) then dont listen to keys
@@ -188,7 +188,7 @@ function keyUppedListener(e) {
 	
 	var key = keycodes[eKeyCode];
 	if (key === undefined) {
-		Cu.reportError('eKeyCode not found in keycodes eKeyCode = ' + eKeyCode);
+		
 		buffer = '';
 		return;
 	}
@@ -210,7 +210,7 @@ function keyUppedListener(e) {
 	}
 		
 	buffer += '' + key;
-	Cu.reportError('buffer updated to "' + buffer + '"');
+	
 	
 	try {
 		if (inurlbar) {
@@ -227,52 +227,52 @@ function keyUppedListener(e) {
 			*/
 			var value = input.value;
 			if (sStart != sEnd) {
-				Cu.reportError('urlbar value cleaning from autocompletion : ' + value);
+				
 				value = value.replace(value.substr(sStart, sEnd), ''); //this removes the autocompletion
 			}
-			Cu.reportError('urlbar value = "' + value + '"');
+			
 			
 			//if (!((buffer == '' && value.length == 1) || (buffer.length == value.length - 1 && value.indexOf(buffer) == 0))) {
 			if (buffer != value || value.length > maxHotkeyLength) {
-				Cu.reportError('typed to much, MUST NOT CLEAR BUFFER, as user may have typed 1 and then 2 real fast, he may have typed the 2 before keyupping the 1');
-				Cu.reportError('maxHotkey len = ' + maxHotkey.toString().length);
-				Cu.reportError('buffer = "' + buffer + '" and value = "' + value + '"');
+				
+				
+				
 				buffer = '';
 				return;
 			} else {
-				Cu.reportError('all fine contnuing');
+				
 			}
 			/* if (validHotkeys.indexOf(',' + value) == -1) {
 				buffer = '';
-				Cu.reportError('ku: in url bar and the value in here is not in validHotkeys so return');
+				
 				return;
 			} */
 		}
 	} catch (ex) {
-		Cu.reportError('caught ex');
-		Cu.reportError(ex);
+		
+		
 	}
 	
 	if (!inurlbar) {
 		//var hasCaret = (!e.target.getAttribute('disabled') && (formHelperIsEditable(e.target) || (e.target instanceof Ci.nsIDOMHTMLInputElement && e.target.mozIsTextField(false)) || e.target instanceof Ci.nsIDOMHTMLTextAreaElement || e.target instanceof Ci.nsIDOMXULTextBoxElement));
 		
 		if (hasCaret) {
-			Cu.reportError('in some typable field so dont listen keys');
+			
 			buffer = '';
 			return;
 		}
 	}
 	
 	if (validHotkeys.indexOf(',' + buffer) == -1) {
-		Cu.reportError('buffer of "' + buffer + '" is not in validHotkeys so return');
+		
 		buffer = '';
 		return;
 	}
 	
 	try { //this definitely has to be here to address #3 because what if user is typing two key hotkey, and lifts the second downed key before or something something adfhalsdfasf too much thinking
-		Cu.reportError('clearing navBufferTO');
+		
 		hasNewTab_ContentWindow.clearTimeout(navBufferTO);
-	} catch(ex) { Cu.reportError(ex) }
+	} catch(ex) {  }
 	
 	navBufferTO = hasNewTab_ContentWindow.setTimeout(navBuffer, prefs.multiKeySpeed);
 }
@@ -312,15 +312,15 @@ function winActd(e) {
 		//var aTab = gBrowser.selectedTab;
 		//var contentWindow = aTab.linkedBrowser.contentWindow;
 		var contentWindow = gBrowser.contentWindow;
-		Cu.reportError('running contentWin check');
+		
 		checkWinHasNewTab(contentWindow);
-		Cu.reportError('this focused gBrowser has new tab? == ' + hasNewTab);
+		
 	} else {
-		Cu.reportError('running aDOMWin check');
+		
 		checkWinHasNewTab(aDOMWindow);
-		Cu.reportError('this focused aDOMWin has new tab? == ' + hasNewTab);
+		
 	}
-	Cu.reportError('actd complete');
+	
 	
 }
 
@@ -331,7 +331,7 @@ function tabSeld(e) {
 	var contentWindow = e.target.linkedBrowser.contentWindow;
 	
 	checkWinHasNewTab(contentWindow);
-	Cu.reportError('this focused tab has new tab? == ' + hasNewTab);
+	
 	
 }
 
@@ -342,7 +342,7 @@ function checkWinHasNewTab(theWin) {
 			if (theWin.top != hasNewTab_ContentWindow) {
 				//check because if a side iframe in the about:newtab window loads, and it doesnt have about:newtab, it will say its false but this willl not be accurate
 				//already identified that somewhere in this view is about:newtab so no need to check it again
-				Cu.reportError('has been already determined that this top window has about:newtab somewhere so dont check');
+				
 				return;
 			}
 		}
@@ -353,13 +353,13 @@ function checkWinHasNewTab(theWin) {
 	for (var j = 0; j < frames.length; j++) {
 		winArr.push(frames[j].window);
 	}
-	Cu.reportError('checking win and # of frames in tab: ' + frames.length);
+	
 	for (var j = 0; j < winArr.length; j++) {
 		/*
 		if (j == 0) {
-			Cu.reportError('**checking win: ' + j + ' location = ' + winArr[j].document.location);
+			
 		} else {
-			Cu.reportError('**checking frame win: ' + j + ' location = ' + winArr[j].document.location);
+			
 		}
 		*/
 		if (winArr[j].document.location == 'about:newtab') {
@@ -368,7 +368,7 @@ function checkWinHasNewTab(theWin) {
 			hasNewTab_ContentWindowTop = theWin.top;
 			return true;
 		} else {
-			Cu.reportError('the loch here is = ' + winArr[j].document.location);
+			
 		}
 	}
 
@@ -380,10 +380,10 @@ function checkWinHasNewTab(theWin) {
 function listenPageLoad(event) {
 	var win = event.originalTarget.defaultView;
 	var doc = win.document;
-	Cu.reportError('page loaded loc = ' + doc.location);
+	
 	if (win.frameElement) {
 		//its a frame
-		Cu.reportError('its a frame');
+		
 		if (ignoreFrames) {
 			return;//dont want to watch frames
 		}
@@ -393,9 +393,9 @@ function listenPageLoad(event) {
 
 function listenAboutNewTabUnload(e) {
 	var win = e.originalTarget.defaultView;
-	Cu.reportError('in about unload');
+	
 	checkWinHasNewTab(win);
-	Cu.reportError('hasNewTab? = ' + hasNewTab);
+	
 }
 /*start - windowlistener*/
 var windowListener = {
@@ -431,10 +431,10 @@ var windowListener = {
 			//var contentWindow = aTab.linkedBrowser.contentWindow;
 			var contentWindow = gBrowser.contentWindow;
 			checkWinHasNewTab(contentWindow);
-			Cu.reportError('onregister: this focused gBrowser has new tab? == ' + hasNewTab);
+			
 		} else {
 			checkWinHasNewTab(aDOMWindow);
-			Cu.reportError('onregister: this focused aDOMWin has new tab? == ' + hasNewTab);
+			
 		}
 		//end - check if currently focused window hasNewTab
 	},
@@ -466,7 +466,7 @@ var windowListener = {
 					//start - go through all tabs in this window we just added to
 					var tabs = aDOMWindow.gBrowser.tabContainer.childNodes;
 					for (var i = 0; i < tabs.length; i++) {
-						Cu.reportError('DOING tab: ' + i);
+						
 						var tabBrowser = tabs[i].linkedBrowser;
 						var win = tabBrowser.contentWindow;
 						loadIntoContentWindowAndItsFrames(win);
@@ -488,7 +488,7 @@ var windowListener = {
 				//start - go through all tabs in this window we just added to
 				var tabs = aDOMWindow.gBrowser.tabContainer.childNodes;
 				for (var i = 0; i < tabs.length; i++) {
-					Cu.reportError('DOING tab: ' + i);
+					
 					var tabBrowser = tabs[i].linkedBrowser;
 					var win = tabBrowser.contentWindow;
 					loadIntoContentWindowAndItsFrames(win);
@@ -519,7 +519,7 @@ var windowListener = {
 					//start - go through all tabs in this window we just added to
 					var tabs = aDOMWindow.gBrowser.tabContainer.childNodes;
 					for (var i = 0; i < tabs.length; i++) {
-						Cu.reportError('DOING tab: ' + i);
+						
 						var tabBrowser = tabs[i].linkedBrowser;
 						var win = tabBrowser.contentWindow;
 						unloadFromContentWindowAndItsFrames(win);
@@ -541,7 +541,7 @@ var windowListener = {
 				//start - go through all tabs in this window we just added to
 				var tabs = aDOMWindow.gBrowser.tabContainer.childNodes;
 				for (var i = 0; i < tabs.length; i++) {
-					Cu.reportError('DOING tab: ' + i);
+					
 					var tabBrowser = tabs[i].linkedBrowser;
 					var win = tabBrowser.contentWindow;
 					unloadFromContentWindowAndItsFrames(win);
@@ -566,12 +566,12 @@ function loadIntoContentWindowAndItsFrames(theWin) {
 	for (var j = 0; j < frames.length; j++) {
 		winArr.push(frames[j].window);
 	}
-	Cu.reportError('# of frames in tab: ' + frames.length);
+	
 	for (var j = 0; j < winArr.length; j++) {
 		if (j == 0) {
-			Cu.reportError('**checking win: ' + j + ' location = ' + winArr[j].document.location);
+			
 		} else {
-			Cu.reportError('**checking frame win: ' + j + ' location = ' + winArr[j].document.location);
+			
 		}
 		var doc = winArr[j].document;
 		//START - edit below here
@@ -589,12 +589,12 @@ function unloadFromContentWindowAndItsFrames(theWin) {
 	for (var j = 0; j < frames.length; j++) {
 		winArr.push(frames[j].window);
 	}
-	Cu.reportError('# of frames in tab: ' + frames.length);
+	
 	for (var j = 0; j < winArr.length; j++) {
 		if (j == 0) {
-			Cu.reportError('**checking win: ' + j + ' location = ' + winArr[j].document.location);
+			
 		} else {
-			Cu.reportError('**checking frame win: ' + j + ' location = ' + winArr[j].document.location);
+			
 		}
 		var doc = winArr[j].document;
 		//START - edit below here
