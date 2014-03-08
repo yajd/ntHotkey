@@ -193,8 +193,6 @@ function keyUppedListener(e) {
 		return;
 	}
 	
-	Services.appShell.hiddenDOMWindow.console.log('e = ',e);
-	Services.appShell.hiddenDOMWindow.console.log('e.view == ChromeWindow? = ', Object.prototype.toString.call(e.view) == '[object ChromeWindow]');
 	var inurlbar = false;
 	
 	if (e.originalTarget) { //have to use origtarg because when focus is in xul textbox the textbox element is XBL and not an instance of Ci.nsIDOMHTMLInputElement but origTarg is
