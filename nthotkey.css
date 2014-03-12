@@ -1,0 +1,282 @@
+#apple_keyboard {
+	margin: 15px auto 0;
+	width: 794px;
+	height: 315px;
+	background:	#d5d9dc  url('apple-keyboard-background.jpg') repeat-x;
+	-moz-border-radius-topleft: 7px 21px;
+	-moz-border-radius-topright: 7px 21px;
+	-moz-border-radius-bottomright: 10px;
+	-moz-border-radius-bottomleft: 10px;
+	border-top-left-radius: 7px 21px;
+	border-top-right-radius: 7px 21px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	padding: 50px 0 0 10px;
+	-webkit-box-shadow:  
+		inset 0 0 8px #bbb,
+		0 1px 0 #aaa,
+		0 4px 0 #bbb,
+		0 10px 30px #ddd;
+	-moz-box-shadow:  
+		inset 0 0 8px #bbb,
+		0 1px 0 #aaa,
+		0 4px 0 #bbb,
+		0 10px 30px #ddd;
+	box-shadow:  
+		inset 0 0 8px #bbb,
+		0 1px 0 #aaa,
+		0 4px 0 #bbb,
+		0 10px 30px #ddd;}
+
+ul.apple {list-style-type: none; width: 784px; margin: 0 auto;}
+li.apple {float: left;}
+
+
+.apple-key{
+	outline: 0;
+	display: block;
+	color: rgb(110, 110, 110);
+	font: bold 9pt arial;
+	text-decoration: none;
+	text-align: center;
+	width: 44px;
+	height: 41px;
+	margin: 5px;
+	background: #eff0f2;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	border-top: 1px solid #f5f5f5;
+	-webkit-box-shadow: 
+		inset 0 0 25px rgb(230,230,230),
+		0 1px 0 #c3c3c3,
+		0 2px 0 #c9c9c9,
+		0 2px 3px #333;
+	-moz-box-shadow: 
+		inset 0 0 25px rgb(230,230,230),
+		0 1px 0 #c3c3c3,
+		0 2px 0 #c9c9c9,
+		0 2px 3px #333;
+	box-shadow: 
+		inset 0 0 25px rgb(230,230,230),
+		0 1px 0 #c3c3c3,
+		0 2px 0 #c9c9c9,
+		0 2px 3px #333;
+	text-shadow: 0px 1px 0px #fff;}
+
+.apple-key:active, .apple-keydown {
+	color: #888;
+	background: #ebeced;
+	margin: 7px 5px 3px;
+	-webkit-box-shadow:
+		inset 0 0 25px #ddd,
+		0 0 3px #333;
+	-moz-box-shadow: 
+		inset 0 0 25px #ddd,
+		0 0 3px #333;
+	box-shadow: 
+		inset 0 0 25px #ddd,
+		0 0 3px #333;
+	border-top: 1px solid #eee;}
+	
+.apple-fn span {
+	display: block;
+	margin: 14px 5px 0 0;
+	text-align: right;
+	font: bold 6pt arial;
+	text-transform: uppercase;}
+#apple_esc {
+	margin: 6px 15px 0 0;
+	font-size: 7.5pt;
+	text-transform: lowercase;}
+
+
+#apple_numbers li a span {
+	display: block;}
+	
+#apple_numbers li a b {
+	margin: 3px 0 3px;
+	display: block;}
+
+#apple_numbers li .apple-alt b {display: block;margin: 0 0 3px;}
+
+#apple_numbers li #delete span {
+	text-align: right;
+	margin: 23px 10px 0 0;
+	font-size: 7.5pt;
+	text-transform: lowercase;}
+	
+#apple-qwerty li a span {
+	display: block;
+	margin: 13px 0 0;
+	text-transform: uppercase;}
+	
+#apple-qwerty li #tab span {
+	text-align: left;
+	margin: 23px 0 0 10px;
+	font-size: 7.5pt;
+	text-transform: lowercase;}	
+
+#apple-qwerty li .apple-alt b {display: block; margin: 3px 0 0;}
+#apple-qwerty li .apple-alt span {margin: 2px 0 0;}
+
+
+#apple-asdfg li a span {
+	display: block;
+	margin: 13px 0 0;
+	text-transform: uppercase;}
+
+#apple-asdfg li .apple-alt span {margin: 0; text-transform: lowercase;}
+#apple-asdfg li .apple-alt b {display: block; margin: 3px 0 0;}
+#apple-asdfg li #caps b {
+	display: block;
+	background: #999;
+	width: 4px;
+	height: 4px;
+	border-radius: 10px;
+	margin: 9px 0 0 10px;
+	-webkit-box-shadow: inset 0 1px 0 #666;
+	-moz-box-shadow:inset 0 1px 0 #666;
+	box-shadow:inset 0 1px 0 #666;}
+#apple-asdfg li #caps span {
+	text-align: left;
+	margin: 10px 0 0 10px;
+	font-size: 7.5pt;}
+#apple-asdfg li #enter span {
+	text-align: right;
+	margin: 23px 10px 0 0;
+	font-size: 7.5pt;}
+
+
+#apple_zxcvb li a span {
+	display: block;
+	margin: 13px 0 0;
+	text-transform: uppercase;}
+#apple_zxcvb li .apple-shiftleft span {
+	text-align: left;
+	margin: 23px 0 0 10px;
+	font-size: 7.5pt;
+	text-transform: lowercase;}
+#apple_zxcvb li .apple-shiftright span {
+	text-align: right;
+	margin: 23px 10px 0 0;
+	font-size: 7.5pt;
+	text-transform: lowercase;}
+#apple_zxcvb li .apple-alt b {display: block;margin: 4px 0 0;}
+#apple_zxcvb li .apple-alt span {margin: 0;}
+
+	
+#apple_bottomrow li #apple-fn span, #apple_bottomrow li #apple_control span, #apple_bottomrow li #apple_optionleft span, #apple_bottomrow li #apple_commandleft span {
+	display: block;
+	text-align: left;
+	margin: 31px 0 0 8px;
+	font-size: 7.5pt;
+	text-transform: lowercase;}
+
+#apple_bottomrow li #apple_optionright span, #apple_bottomrow li #apple_commandright span {
+	display: block;
+	text-align: right;
+	margin: 31px 8px 0 0;
+	font-size: 7.5pt;
+	text-transform: lowercase;}
+
+#apple_bottomrow ol li #apple_left span, #apple_bottomrow ol li #apple_right span, #apple_bottomrow ol li #apple_up span, #apple_bottomrow ol li #apple_down span {
+	display: block;
+	margin: 9px 0 0;}
+
+.apple-fn {height: 26px; width: 46px;}
+#delete {width: 72px;}
+#tab {width: 72px;}
+#caps {width: 85px;}
+#enter {width: 85px;}
+.apple-shiftleft, .apple-shiftright {width: 112px;}
+#apple-fn, #apple_control, .apple-option, .apple-command, #apple_spacebar {height: 49px;}
+
+#apple_control {width: 56px;}
+.apple-option {width: 46px;}
+.apple-command {width: 67px;}
+#apple_spacebar {width: 226px;}
+
+#apple_left img, #apple_up img, #apple_down img, #apple_right img {border: none;}
+ul.apple ol {list-style-type: none;}
+#apple_down {height: 23px;}
+#apple_up, #apple_left, #apple_right {height: 24px;}
+#apple_left, #apple_right {margin: 30px 5px 5px;}
+#apple_left:active, #apple_right:active {margin: 32px 5px 3px;}
+#apple_up {margin: 5px 5px 1px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px;}
+#apple_up:active {margin: 8px 5px -2px;}
+#apple_down {margin: 0 5px 5px; border-top-left-radius: 0px; border-top-right-radius: 0px;}
+#apple_down:Active {margin: 3px 5px 4px;}
+
+#apple_main {
+	width: 700px;
+	padding: 20px 50px;
+	margin: 0 auto 50px;
+	background: #fff;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 2px #aaa;}
+		
+h1.apple {
+	color: #888;
+	text-align: center;
+	font: bold 25pt/25pt arial;
+	margin: 30px 0 60px;}
+	
+h2.apple {
+	color: #666;
+	font: 13pt/0pt arial;}
+	
+p.apple {
+	color: #999;
+	font: 9pt/17pt arial;
+	margin: 0 0 50px;}
+	
+small.apple {
+	font: italic 8pt/12pt arial;
+	color: #aaa;
+	padding: 0 130px 0 0;
+	display: block;}
+	
+cite.apple {
+	display: block;
+	padding: 0 0 30px;
+	margin: 0 auto;
+	text-align: center;
+	color: #999;
+	font: italic bold 8pt arial;}
+
+ul.apple, ol.apple {padding: 0px; margin: 0;}
+	
+/* Micro Clearfix by Nicolas Gallagher - http://nicolasgallagher.com/micro-clearfix-hack */
+        /* For modern browsers */
+        .cf:before, .cf:after {content:""; display:table;}
+        .cf:after {clear:both;}
+
+        /* For IE 6/7 (trigger hasLayout) */
+        .cf {zoom:1;}
+		
+		
+.nthotkey-apple-key{
+	font-size:16px;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	width: 35px;
+	height: 32px;
+}
+.nthotkey-apple-key span, .nthotkey-apple-plus span {
+	margin: 0 !important;
+}
+	
+.nthotkey-apple-plus{
+	font-size:20px;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	height: 32px;
+	width:auto;
+	padding: 0 5px;
+	box-shadow:none;
+	background:none;
+	border-top-color:transparent;
+
+}
