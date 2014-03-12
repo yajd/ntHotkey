@@ -41,7 +41,7 @@ function addDiv(theDoc) {
 	[].forEach.call(ntThumbs, function(thumb, i) {
 		
 		var hotkey = i + 1;
-		var hotkeyLabelJson = ['ul', {class:'apple cf ntHotkeyHint',id:'apple-qwerty'];
+		var hotkeyLabelJson = ['ul', {class:'apple cf ntHotkeyHint',id:'apple-qwerty'}];
 		
 		var hotkeyStr = hotkey.toString();
 		for (var j=0; j<hotkeyStr.length; j++) {
