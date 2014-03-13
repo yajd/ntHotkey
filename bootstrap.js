@@ -145,7 +145,7 @@ function navBuffer() {
 	
 	
 	var hint = hasNewTab_ContentWindow.document.querySelector('.ntHotkey-' + tBuffer);
-	Services.appShell.hiddenDOMWindow.console.error('html of document checking for buffer', hasNewTab_ContentWindow.document.documentElement.innerHTML);
+	//Services.appShell.hiddenDOMWindow.console.error('html of document checking for buffer', hasNewTab_ContentWindow.document.documentElement.innerHTML);
 	if (hint) {
 		var DOMWin = hasNewTab_ContentWindow.QueryInterface(Ci.nsIInterfaceRequestor)
 											.getInterface(Ci.nsIWebNavigation)
@@ -199,11 +199,11 @@ function keyDownedListener(e) {
 	
 	if (hasNewTab_ContentWindow && hasNewTab_ContentWindow.document && (hasNewTab_ContentWindow.document instanceof Ci.nsIDOMXULDocument || hasNewTab_ContentWindow.document.location != 'about:newtab')) {
 		//likely just navBuffer'ed and need to disconnect this now
-		Services.appShell.hiddenDOMWindow.console.info('doing checkWinHasNewTab');
+		//Services.appShell.hiddenDOMWindow.console.info('doing checkWinHasNewTab');
 		checkWinHasNewTab(hasNewTab_ContentWindow.top);
 		
 	} else {
-		Services.appShell.hiddenDOMWindow.console.warn('NOTTTT doing checkWinHasNewTab');
+		//Services.appShell.hiddenDOMWindow.console.warn('NOTTTT doing checkWinHasNewTab');
 	}
 	
 	//may need to ahve a clearNavBufferTO after the checkWinHasNewTab runs
@@ -234,7 +234,7 @@ function keyUppedListener(e) {
 			if (e.target && e.target.getAttribute('id') == 'urlbar') {
 				inurlbar = true;
 			} else {
-				Services.appShell.hiddenDOMWindow.console.info('returing dont listen to key input from chrome as we not in urlbar');
+				//Services.appShell.hiddenDOMWindow.console.info('returing dont listen to key input from chrome as we not in urlbar');
 				return; //dont listen to any key input if coming from chrome except if they are in urlbar
 			}
 		} 
