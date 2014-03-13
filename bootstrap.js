@@ -33,7 +33,7 @@ function addDiv(theDoc) {
 	
 	//insert the css
 	var cssJson = ['style', {},
-					'#apple_keyboard{width:794px;height:315px;background:#d5d9dc url(apple-keyboard-background.jpg)repeat-x;-moz-border-radius-topleft:7px 21px;-moz-border-radius-topright:7px 21px;-moz-border-radius-bottomright:10px;-moz-border-radius-bottomleft:10px;border-top-left-radius:7px 21px;border-top-right-radius:7px 21px;border-bottom-right-radius:10px;border-bottom-left-radius:10px;-webkit-box-shadow:inset 0 0 8px#bbb,0 1px 0#aaa,0 4px 0#bbb,0 10px 30px#ddd;-moz-box-shadow:inset 0 0 8px#bbb,0 1px 0#aaa,0 4px 0#bbb,0 10px 30px#ddd;box-shadow:inset 0 0 8px#bbb,0 1px 0#aaa,0 4px 0#bbb,0 10px 30px#ddd;margin:15px auto 0;padding:50px 0 0 10px}ul.apple{list-style-type:none;width:784px;margin:0 auto}li.apple{float:left}.apple-key{outline:0;display:block;color:rgb(110,110,110);font:bold 9pt arial;text-decoration:none;text-align:center;width:44px;height:41px;background:#eff0f2;-moz-border-radius:4px;border-radius:4px;border-top:1px solid#f5f5f5;-webkit-box-shadow:inset 0 0 25px rgb(230,230,230),0 1px 0#c3c3c3,0 2px 0#c9c9c9,0 2px 3px#333;-moz-box-shadow:inset 0 0 25px rgb(230,230,230),0 1px 0#c3c3c3,0 2px 0#c9c9c9,0 2px 3px#333;box-shadow:inset 0 0 25px rgb(230,230,230),0 1px 0#c3c3c3,0 2px 0#c9c9c9,0 2px 3px#333;text-shadow:0 1px 0#fff;margin:5px}.apple-key:active,.apple-keydown{color:#888;background:#ebeced;-webkit-box-shadow:inset 0 0 25px#ddd,0 0 3px#333;-moz-box-shadow:inset 0 0 25px#ddd,0 0 3px#333;box-shadow:inset 0 0 25px#ddd,0 0 3px#333;border-top:1px solid#eee;margin:7px 5px 3px}.apple-fn span{display:block;text-align:right;font:bold 6pt arial;text-transform:uppercase;margin:14px 5px 0 0}#apple_esc{font-size:7.5pt;text-transform:lowercase;margin:6px 15px 0 0}#apple_numbers li a span{display:block}#apple_numbers li a b{display:block;margin:3px 0}#apple_numbers li.apple-alt b{display:block;margin:0 0 3px}#apple-qwerty li.apple-alt span{margin:2px 0 0}#apple-asdfg li.apple-alt span{text-transform:lowercase;margin:0}#apple-asdfg li#caps b{display:block;background:#999;width:4px;height:4px;border-radius:10px;-webkit-box-shadow:inset 0 1px 0#666;-moz-box-shadow:inset 0 1px 0#666;box-shadow:inset 0 1px 0#666;margin:9px 0 0 10px}#apple-asdfg li#caps span{text-align:left;font-size:7.5pt;margin:10px 0 0 10px}#apple-asdfg li#enter span{text-align:right;font-size:7.5pt;margin:23px 10px 0 0}#apple_zxcvb li.apple-alt b{display:block;margin:4px 0 0}#apple_zxcvb li.apple-alt span{margin:0}#apple_bottomrow li#apple-fn span,#apple_bottomrow li#apple_control span,#apple_bottomrow li#apple_optionleft span,#apple_bottomrow li#apple_commandleft span{display:block;text-align:left;font-size:7.5pt;text-transform:lowercase;margin:31px 0 0 8px}#apple_bottomrow li#apple_optionright span,#apple_bottomrow li#apple_commandright span{display:block;text-align:right;font-size:7.5pt;text-transform:lowercase;margin:31px 8px 0 0}#apple_bottomrow ol li#apple_left span,#apple_bottomrow ol li#apple_right span,#apple_bottomrow ol li#apple_up span,#apple_bottomrow ol li#apple_down span{display:block;margin:9px 0 0}.apple-fn{height:26px;width:46px}.apple-shiftleft,.apple-shiftright{width:112px}#apple-fn,#apple_control,.apple-option,.apple-command,#apple_spacebar{height:49px}#apple_control{width:56px}.apple-option{width:46px}.apple-command{width:67px}#apple_spacebar{width:226px}#apple_left img,#apple_up img,#apple_down img,#apple_right img{border:none}ul.apple ol{list-style-type:none}#apple_down{height:23px;border-top-left-radius:0;border-top-right-radius:0;margin:0 5px 5px}#apple_up,#apple_left,#apple_right{height:24px}#apple_left,#apple_right{margin:30px 5px 5px}#apple_left:active,#apple_right:active{margin:32px 5px 3px}#apple_up{border-bottom-right-radius:0;border-bottom-left-radius:0;margin:5px 5px 1px}#apple_up:active{margin:8px 5px-2px}#apple_down:Active{margin:3px 5px 4px}#apple_main{width:700px;background:#fff;border-radius:5px;-webkit-box-shadow:0 1px 2px#aaa;margin:0 auto 50px;padding:20px 50px}h1.apple{color:#888;text-align:center;font:bold 25pt/25pt arial;margin:30px 0 60px}h2.apple{color:#666;font:13pt/0 arial}p.apple{color:#999;font:9pt/17pt arial;margin:0 0 50px}small.apple{font:italic 8pt/12pt arial;color:#aaa;display:block;padding:0 130px 0 0}cite.apple{display:block;text-align:center;color:#999;font:italic bold 8pt arial;margin:0 auto;padding:0 0 30px}ul.apple,ol.apple{margin:0;padding:0}.cf:before,.cf:after{content:"";display:table}.cf:after{clear:both}.cf{zoom:1}.nthotkey-apple-key{font-size:16px;display:table-cell;vertical-align:middle;text-align:center;width:35px;height:32px}.nthotkey-apple-key span{margin:0 2px 0 2px !important}.nthotkey-apple-plus span{margin:-4px -1px -3px 2px !important}.nthotkey-apple-plus{display:table-cell;vertical-align:middle;text-align:center;height:auto;width:auto;margin: 0px 4px !important; box-shadow: 0px 0px 25px #E6E6E6 inset, 0px 1px 0px #C3C3C3, 0px 0px 0px #C9C9C9, 0px 1px 1px #333;}#apple_numbers li#delete span,#apple_zxcvb li.apple-shiftright span{text-align:right;font-size:7.5pt;text-transform:lowercase;margin:23px 10px 0 0}#apple-qwerty li a span,#apple-asdfg li a span,#apple_zxcvb li a span{display:block;text-transform:uppercase;margin:13px 0 0}#apple-qwerty li#tab span,#apple_zxcvb li.apple-shiftleft span{text-align:left;font-size:7.5pt;text-transform:lowercase;margin:23px 0 0 10px}#apple-qwerty li.apple-alt b,#apple-asdfg li.apple-alt b{display:block;margin:3px 0 0}#delete,#tab{width:72px}#caps,#enter{width:85px}.ntHotkeyHint{position:absolute;display:flex;justify-content:center;align-items:center;height:100%;width:100% !important;pointer-events:none;transition:opacity 0.3s;}.newtab-site:hover .ntHotkeyHint{opacity:0}'
+					'#apple_keyboard{width:794px;height:315px;background:#d5d9dc url(apple-keyboard-background.jpg)repeat-x;-moz-border-radius-topleft:7px 21px;-moz-border-radius-topright:7px 21px;-moz-border-radius-bottomright:10px;-moz-border-radius-bottomleft:10px;border-top-left-radius:7px 21px;border-top-right-radius:7px 21px;border-bottom-right-radius:10px;border-bottom-left-radius:10px;-webkit-box-shadow:inset 0 0 8px#bbb,0 1px 0#aaa,0 4px 0#bbb,0 10px 30px#ddd;-moz-box-shadow:inset 0 0 8px#bbb,0 1px 0#aaa,0 4px 0#bbb,0 10px 30px#ddd;box-shadow:inset 0 0 8px#bbb,0 1px 0#aaa,0 4px 0#bbb,0 10px 30px#ddd;margin:15px auto 0;padding:50px 0 0 10px}ul.apple{list-style-type:none;width:784px;margin:0 auto}li.apple{float:left}.apple-key{outline:0;display:block;color:rgb(110,110,110);font:bold 9pt arial;text-decoration:none;text-align:center;width:44px;height:41px;background:#eff0f2;-moz-border-radius:4px;border-radius:4px;border-top:1px solid#f5f5f5;-webkit-box-shadow:inset 0 0 25px rgb(230,230,230),0 1px 0#c3c3c3,0 2px 0#c9c9c9,0 2px 3px#333;-moz-box-shadow:inset 0 0 25px rgb(230,230,230),0 1px 0#c3c3c3,0 2px 0#c9c9c9,0 2px 3px#333;box-shadow:inset 0 0 25px rgb(230,230,230),0 1px 0#c3c3c3,0 2px 0#c9c9c9,0 2px 3px#333;text-shadow:0 1px 0#fff;margin:5px}.apple-key:active,.apple-keydown{color:#888;background:#ebeced;-webkit-box-shadow:inset 0 0 25px#ddd,0 0 3px#333;-moz-box-shadow:inset 0 0 25px#ddd,0 0 3px#333;box-shadow:inset 0 0 25px#ddd,0 0 3px#333;border-top:1px solid#eee;margin:7px 5px 3px}.apple-fn span{display:block;text-align:right;font:bold 6pt arial;text-transform:uppercase;margin:14px 5px 0 0}#apple_esc{font-size:7.5pt;text-transform:lowercase;margin:6px 15px 0 0}#apple_numbers li a span{display:block}#apple_numbers li a b{display:block;margin:3px 0}#apple_numbers li.apple-alt b{display:block;margin:0 0 3px}#apple-qwerty li.apple-alt span{margin:2px 0 0}#apple-asdfg li.apple-alt span{text-transform:lowercase;margin:0}#apple-asdfg li#caps b{display:block;background:#999;width:4px;height:4px;border-radius:10px;-webkit-box-shadow:inset 0 1px 0#666;-moz-box-shadow:inset 0 1px 0#666;box-shadow:inset 0 1px 0#666;margin:9px 0 0 10px}#apple-asdfg li#caps span{text-align:left;font-size:7.5pt;margin:10px 0 0 10px}#apple-asdfg li#enter span{text-align:right;font-size:7.5pt;margin:23px 10px 0 0}#apple_zxcvb li.apple-alt b{display:block;margin:4px 0 0}#apple_zxcvb li.apple-alt span{margin:0}#apple_bottomrow li#apple-fn span,#apple_bottomrow li#apple_control span,#apple_bottomrow li#apple_optionleft span,#apple_bottomrow li#apple_commandleft span{display:block;text-align:left;font-size:7.5pt;text-transform:lowercase;margin:31px 0 0 8px}#apple_bottomrow li#apple_optionright span,#apple_bottomrow li#apple_commandright span{display:block;text-align:right;font-size:7.5pt;text-transform:lowercase;margin:31px 8px 0 0}#apple_bottomrow ol li#apple_left span,#apple_bottomrow ol li#apple_right span,#apple_bottomrow ol li#apple_up span,#apple_bottomrow ol li#apple_down span{display:block;margin:9px 0 0}.apple-fn{height:26px;width:46px}.apple-shiftleft,.apple-shiftright{width:112px}#apple-fn,#apple_control,.apple-option,.apple-command,#apple_spacebar{height:49px}#apple_control{width:56px}.apple-option{width:46px}.apple-command{width:67px}#apple_spacebar{width:226px}#apple_left img,#apple_up img,#apple_down img,#apple_right img{border:none}ul.apple ol{list-style-type:none}#apple_down{height:23px;border-top-left-radius:0;border-top-right-radius:0;margin:0 5px 5px}#apple_up,#apple_left,#apple_right{height:24px}#apple_left,#apple_right{margin:30px 5px 5px}#apple_left:active,#apple_right:active{margin:32px 5px 3px}#apple_up{border-bottom-right-radius:0;border-bottom-left-radius:0;margin:5px 5px 1px}#apple_up:active{margin:8px 5px-2px}#apple_down:Active{margin:3px 5px 4px}#apple_main{width:700px;background:#fff;border-radius:5px;-webkit-box-shadow:0 1px 2px#aaa;margin:0 auto 50px;padding:20px 50px}h1.apple{color:#888;text-align:center;font:bold 25pt/25pt arial;margin:30px 0 60px}h2.apple{color:#666;font:13pt/0 arial}p.apple{color:#999;font:9pt/17pt arial;margin:0 0 50px}small.apple{font:italic 8pt/12pt arial;color:#aaa;display:block;padding:0 130px 0 0}cite.apple{display:block;text-align:center;color:#999;font:italic bold 8pt arial;margin:0 auto;padding:0 0 30px}ul.apple,ol.apple{margin:0;padding:0}.cf:before,.cf:after{content:"";display:table}.cf:after{clear:both}.cf{zoom:1}.nthotkey-apple-key{font-size:16px;display:table-cell;vertical-align:middle;text-align:center;width:35px;height:32px}.nthotkey-apple-key span{margin:0 2px 0 2px !important}.nthotkey-apple-plus span{margin:-4px 1px -3px 2px !important}.nthotkey-apple-plus{display:table-cell;vertical-align:middle;text-align:center;height:auto;width:auto;box-shadow: 0px 0px 25px #E6E6E6 inset, 0px 1px 0px #C3C3C3, 0px 0px 0px #C9C9C9, 0px 1px 1px #333;}#apple_numbers li#delete span,#apple_zxcvb li.apple-shiftright span{text-align:right;font-size:7.5pt;text-transform:lowercase;margin:23px 10px 0 0}#apple-qwerty li a span,#apple-asdfg li a span,#apple_zxcvb li a span{display:block;text-transform:uppercase;margin:13px 0 0}#apple-qwerty li#tab span,#apple_zxcvb li.apple-shiftleft span{text-align:left;font-size:7.5pt;text-transform:lowercase;margin:23px 0 0 10px}#apple-qwerty li.apple-alt b,#apple-asdfg li.apple-alt b{display:block;margin:3px 0 0}#delete,#tab{width:72px}#caps,#enter{width:85px}.ntHotkeyHint{position:absolute;display:flex;justify-content:center;align-items:center;height:100%;width:100% !important;pointer-events:none;transition:opacity 0.3s;}.newtab-site:hover .ntHotkeyHint{opacity:0}'
 				  ];
 	theDoc.documentElement.appendChild(jsonToDOM(cssJson, theDoc, {}));
 	//end insert the css
@@ -47,7 +47,7 @@ function addDiv(theDoc) {
 		for (var j=0; j<hotkeyStr.length; j++) {
 			if (j > 0) {
 				hotkeyLabelJson.push(
-					['li', {class:'apple'},
+					['li', {class:'apple',style:'margin:0px 4px;'},
 						['a',{class:'nthotkey-apple-plus apple-key'},
 							['span', {},
 								'+'
@@ -447,4 +447,269 @@ var windowListener = {
 		while (XULWindows.hasMoreElements()) {
 			let aXULWindow = XULWindows.getNext();
 			let aDOMWindow = aXULWindow.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
+			windowListener.loadIntoWindow(aDOMWindow, aXULWindow);
+		}
+		// Listen to new windows
+		Services.wm.addListener(windowListener);
 		
+		
+		//check if currently focused window hasNewTab
+		var aDOMWindow = Services.wm.getMostRecentWindow(null);
+		var gBrowser = aDOMWindow.gBrowser;
+		
+		if (gBrowser) {
+			//var aTab = gBrowser.selectedTab;
+			//var contentWindow = aTab.linkedBrowser.contentWindow;
+			var contentWindow = gBrowser.contentWindow;
+			checkWinHasNewTab(contentWindow);
+			
+		} else {
+			checkWinHasNewTab(aDOMWindow);
+			
+		}
+		//end - check if currently focused window hasNewTab
+	},
+	unregister: function () {
+		// Unload from any existing windows
+		let XULWindows = Services.wm.getXULWindowEnumerator(null);
+		while (XULWindows.hasMoreElements()) {
+			let aXULWindow = XULWindows.getNext();
+			let aDOMWindow = aXULWindow.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
+			windowListener.unloadFromWindow(aDOMWindow, aXULWindow);
+		}
+		//Stop listening so future added windows dont get this attached
+		Services.wm.removeListener(windowListener);
+	},
+	//END - DO NOT EDIT HERE
+	loadIntoWindow: function (aDOMWindow, aXULWindow) {
+		if (!aDOMWindow) {
+			return;
+		}
+		if (aDOMWindow.gBrowser) {
+			aDOMWindow.gBrowser.addEventListener('pageshow', listenPageLoad, true);
+			aDOMWindow.addEventListener('keydown', keyDownedListener, false);
+			aDOMWindow.addEventListener('keyup', keyUppedListener, false);
+			aDOMWindow.addEventListener('activate', winActd, false);
+
+			if (aDOMWindow.gBrowser) {
+				if (aDOMWindow.gBrowser.tabContainer) {
+					aDOMWindow.gBrowser.tabContainer.addEventListener('TabSelect', tabSeld, false);
+					//start - go through all tabs in this window we just added to
+					var tabs = aDOMWindow.gBrowser.tabContainer.childNodes;
+					for (var i = 0; i < tabs.length; i++) {
+						
+						var tabBrowser = tabs[i].linkedBrowser;
+						var win = tabBrowser.contentWindow;
+						loadIntoContentWindowAndItsFrames(win);
+					}
+					//end - go through all tabs in this window we just added to
+				} else {
+					//does not have tabContainer
+					var win = aDOMWindow.gBrowser.contentWindow;
+					loadIntoContentWindowAndItsFrames(win);
+				}
+			} else {
+				//window does not have gBrowser, here its fine though, because winActd is on it
+				//should maybe check if its new:tab page, if im counting winActd as ok here, typically these windows never have it tho
+			}
+			/*
+			if (aDOMWindow.gBrowser.tabContainer) {
+				//has tabContainer
+				aDOMWindow.gBrowser.tabContainer.addEventListener('TabSelect', tabSeld, false);
+				//start - go through all tabs in this window we just added to
+				var tabs = aDOMWindow.gBrowser.tabContainer.childNodes;
+				for (var i = 0; i < tabs.length; i++) {
+					
+					var tabBrowser = tabs[i].linkedBrowser;
+					var win = tabBrowser.contentWindow;
+					loadIntoContentWindowAndItsFrames(win);
+				}
+				//end - go through all tabs in this window we just added to
+			} else {
+				//does not have tabContainer
+				var win = aDOMWindow.gBrowser.contentWindow;
+				loadIntoContentWindowAndItsFrames(win);
+			}
+			*/
+		} else {
+			//window does not have gBrowser
+		}
+	},
+	unloadFromWindow: function (aDOMWindow, aXULWindow) {
+		if (!aDOMWindow) {
+			return;
+		}
+		if (aDOMWindow.gBrowser) {
+			aDOMWindow.gBrowser.removeEventListener('pageshow', listenPageLoad, true);
+			aDOMWindow.removeEventListener('keydown', keyDownedListener, false);
+			aDOMWindow.removeEventListener('keyup', keyUppedListener, false);
+			aDOMWindow.removeEventListener('activate', winActd, false);
+			if (aDOMWindow.gBrowser) {
+				if (aDOMWindow.gBrowser.tabContainer) {
+					aDOMWindow.gBrowser.tabContainer.removeEventListener('TabSelect', tabSeld, false);
+					//start - go through all tabs in this window we just added to
+					var tabs = aDOMWindow.gBrowser.tabContainer.childNodes;
+					for (var i = 0; i < tabs.length; i++) {
+						
+						var tabBrowser = tabs[i].linkedBrowser;
+						var win = tabBrowser.contentWindow;
+						unloadFromContentWindowAndItsFrames(win);
+					}
+					//end - go through all tabs in this window we just added to
+				} else {
+					//does not have tabContainer
+					var win = aDOMWindow.gBrowser.contentWindow;
+					unloadFromContentWindowAndItsFrames(win);
+				}
+			} else {
+				//window does not have gBrowser, here its fine though, because winActd is on it
+				//should maybe check if its new:tab page, if im counting winActd as ok here, typically these windows never have it tho
+			}
+			/*
+			if (aDOMWindow.gBrowser.tabContainer) {
+				//has tabContainer
+				aDOMWindow.gBrowser.tabContainer.removeEventListener('TabSelect', tabSeld, false);
+				//start - go through all tabs in this window we just added to
+				var tabs = aDOMWindow.gBrowser.tabContainer.childNodes;
+				for (var i = 0; i < tabs.length; i++) {
+					
+					var tabBrowser = tabs[i].linkedBrowser;
+					var win = tabBrowser.contentWindow;
+					unloadFromContentWindowAndItsFrames(win);
+				}
+				//end - go through all tabs in this window we just added to
+			} else {
+				//does not have tabContainer
+				var win = aDOMWindow.gBrowser.contentWindow;
+				unloadFromContentWindowAndItsFrames(win);
+			}
+			*/
+		} else {
+			//window does not have gBrowser
+		}
+	}
+};
+/*end - windowlistener*/
+
+function loadIntoContentWindowAndItsFrames(theWin) {
+	var frames = theWin.frames;
+	var winArr = [theWin];
+	for (var j = 0; j < frames.length; j++) {
+		winArr.push(frames[j].window);
+	}
+	
+	for (var j = 0; j < winArr.length; j++) {
+		if (j == 0) {
+			
+		} else {
+			
+		}
+		var doc = winArr[j].document;
+		//START - edit below here
+		addDiv(doc);
+		if (ignoreFrames) {
+			break;
+		}
+		//END - edit above here
+	}
+}
+
+function unloadFromContentWindowAndItsFrames(theWin) {
+	var frames = theWin.frames;
+	var winArr = [theWin];
+	for (var j = 0; j < frames.length; j++) {
+		winArr.push(frames[j].window);
+	}
+	
+	for (var j = 0; j < winArr.length; j++) {
+		if (j == 0) {
+			
+		} else {
+			
+		}
+		var doc = winArr[j].document;
+		//START - edit below here
+		removeDiv(doc);
+		if (ignoreFrames) {
+			break;
+		}
+		//END - edit above here
+	}
+}
+
+/*dom insertion library start*/
+function jsonToDOM(xml, doc, nodes) {
+    function namespace(name) {
+        var m = /^(?:(.*):)?(.*)$/.exec(name);        
+        return [jsonToDOM.namespaces[m[1]], m[2]];
+    }
+
+    function tag(name, attr) {
+        if (Array.isArray(name)) {
+            var frag = doc.createDocumentFragment();
+            Array.forEach(arguments, function (arg) {
+                if (!Array.isArray(arg[0]))
+                    frag.appendChild(tag.apply(null, arg));
+                else
+                    arg.forEach(function (arg) {
+                        frag.appendChild(tag.apply(null, arg));
+                    });
+            });
+            return frag;
+        }
+
+        var args = Array.slice(arguments, 2);
+        var vals = namespace(name);
+		//Cu.reportError('vals[0] = "' + vals[0] + '"');
+		//Cu.reportError('vals[1] = "' + vals[1] + '"');
+        var elem = doc.createElementNS(vals[0] || jsonToDOM.defaultNamespace, vals[1]);
+
+        for (var key in attr) {
+            var val = attr[key];
+            if (nodes && key == "key")
+                nodes[val] = elem;
+
+            vals = namespace(key);
+            if (typeof val == "function")
+                elem.addEventListener(key.replace(/^on/, ""), val, false);
+            else
+                elem.setAttributeNS(vals[0] || "", vals[1], val);
+        }
+        args.forEach(function(e) {
+			//Cu.reportError('e == ' + e);
+			//Cu.reportError('typeof == ' + cTypeof(e));
+			//Cu.reportError('e instanceof doc.defaultView.Node == ' + (e instanceof doc.defaultView.Node));
+			try {
+				elem.appendChild(Object.prototype.toString.call(e) == '[object Array]' ?
+									tag.apply(null, e) :
+									e instanceof doc.defaultView.Node ? //note: for this line to work when dumping xpcom stuff, must pass in cWin.document as 2nd arg of jsonToDOM
+									e :
+									doc.createTextNode(e)
+								);
+			} catch (ex) {
+				elem.appendChild(doc.createTextNode(ex));
+			}
+        });
+        return elem;
+    }
+    return tag.apply(null, xml);
+}
+jsonToDOM.namespaces = {
+    html: "http://www.w3.org/1999/xhtml",
+    xul: "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+};
+jsonToDOM.defaultNamespace = jsonToDOM.namespaces.html;
+/*dom insertion library end*/
+
+function startup(aData, aReason) {
+	windowListener.register();
+}
+
+function shutdown(aData, aReason) {
+	if (aReason == APP_SHUTDOWN) return;
+	windowListener.unregister();
+}
+
+function install() {}
+
+function uninstall() {}
